@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import Tasks from "./Components/Tasks/Tasks";
+import Products from "./Components/Products/Products";
+import Notfound from "./Components/Notfound/Notfound";
+import StandardErrorBoundry from "./Components/LCM/StandardErrorBoundry";
+import Layout from "./Components/Layout/Layout";
+import { createBrowserRouter } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import Addproduct from './Components/Addproduct/Addproduct';
+let routers = createBrowserRouter([
+  {
+    path: "",
+    element: <Layout />,
+    errorElement: <Notfound />,
+    children: [
+      { index: true, element: <Tasks /> },
+      { path: "tasks", element: <Tasks /> },
+      { path: "products", element: <Products /> },
+      { path: "addproduct", element: <Addproduct /> }
+    ],
+  },
+]);
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <StandardErrorBoundry>
+        <RouterProvider router={routers}></RouterProvider>
+      </StandardErrorBoundry>
+    </>
   );
 }
 
